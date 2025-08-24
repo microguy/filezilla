@@ -12,9 +12,18 @@ Legend:
 
 4.0.0 (2025-08-24)
 
+! SECURITY: Removed all bundled software/adware from installer - clean installation only
+! SECURITY: Eliminated plaintext password storage - all passwords now require encryption
+! SECURITY: Enforced master password protection for all stored credentials
 + SFTP: TCP connection timeout reduced to 3 seconds for faster reconnection after idle
++ Upgraded codebase to C++23 standard for modern language features and performance
++ Build system now requires CMake 4.1.0 or later for optimal C++23 support
++ Integrated open-source encryption for secure password storage (using libfilezilla's crypto)
 + Added MicroGuy to copyright holders
-- Modified by MicroGuy for improved reconnection performance
+- Modified by MicroGuy for improved reconnection performance and enhanced security
+- Removed deprecated C++ functions for future-proof code
+- Removed installer offers/bundled software system completely
+- Disabled insecure password storage options in favor of encrypted-only storage
 
 3.69.3 (2025-07-31)
 

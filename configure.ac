@@ -87,10 +87,17 @@ if ! test "$localesonly" = "yes"; then
     AX_APPEND_FLAG([-Wl,-no_weak_imports], LFDLAGS)
   ])
 
-  # Check for C++17 support
-  AX_CXX_COMPILE_STDCXX_17([noext],[mandatory])
+  # MicroGuy Edition - GCC 15.2+ and C++23 only!
+  CHECK_GCC_VERSION
+  
+  # Check for C++23 support - The only C++ that matters!
+  AX_CXX_COMPILE_STDCXX_23([noext],[mandatory])
   CHECK_LIBCXX
-  AX_APPEND_FLAG([-std=c++17], [OBJCXXFLAGS])
+  AX_APPEND_FLAG([-std=c++23], [OBJCXXFLAGS])
+  
+  # Add C++23 specific flags for maximum performance
+  AX_APPEND_FLAG([-fconcepts-diagnostics-depth=3], [CXXFLAGS])
+  AX_APPEND_FLAG([-fcoroutines], [CXXFLAGS])
 
   # libstdc++ as shipped with GCC 4.7 lacks std::map::emplace
   FZ_CHECK_MAP_EMPLACE

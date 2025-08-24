@@ -8,6 +8,9 @@
 /* Buildtype, indicates official builds and nightly builds */
 #undef BUILDTYPE
 
+/* Compiler version */
+#undef COMPILER_VERSION
+
 /* Define if building with FTP(S) support. */
 #undef ENABLE_FTP
 
@@ -32,8 +35,8 @@
 /* clock_gettime can be used */
 #undef HAVE_CLOCK_GETTIME
 
-/* define if the compiler supports basic C++17 syntax */
-#undef HAVE_CXX17
+/* define if the compiler supports basic C++23 syntax */
+#undef HAVE_CXX23
 
 /* Define to 1 if you have the declaration of `CLOCK_MONOTONIC', and to 0 if
    you don't. */

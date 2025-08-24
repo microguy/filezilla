@@ -38,13 +38,17 @@ bool COptionsPagePasswords::CreateControls(wxWindow* parent)
 	main->AddGrowableCol(0);
 	SetSizer(main);
 
-	auto [box, inner] = lay.createStatBox(main, _("Passwords"), 1);
+	auto [box, inner] = lay.createStatBox(main, _("Password Security (MicroGuy Edition)"), 1);
 
-	impl_->save_ = new wxRadioButton(box, nullID, _("Sav&e passwords"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	// MicroGuy Edition: Removed plaintext password storage option for security
+	impl_->save_ = new wxRadioButton(box, nullID, _("Disabled - Plaintext storage removed for security"), wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
 	inner->Add(impl_->save_);
+	impl_->save_->Enable(false);  // Disable plaintext option
+	impl_->save_->Hide();  // Hide it completely
+	
 	impl_->nosave_ = new wxRadioButton(box, nullID, _("D&o not save passwords"));
 	inner->Add(impl_->nosave_);
-	impl_->usemaster_ = new wxRadioButton(box, nullID, _("Sa&ve passwords protected by a master password"));
+	impl_->usemaster_ = new wxRadioButton(box, nullID, _("Sa&ve passwords protected by a master password (Required)"));
 	inner->Add(impl_->usemaster_);
 
 	auto changeSizer = lay.createFlex(2);
@@ -95,7 +99,8 @@ bool COptionsPagePasswords::LoadPage()
 				impl_->masterpw_->SetHint(_("Leave empty to keep existing password."));
 			}
 			else {
-				impl_->save_->SetValue(true);
+				// MicroGuy Edition: Default to encrypted storage, never plaintext
+				impl_->usemaster_->SetValue(true);
 			}
 		}
 	}
@@ -116,7 +121,8 @@ bool COptionsPagePasswords::SavePage()
 
 	std::wstring const newPw = impl_->masterpw_->GetValue().ToStdWstring();
 
-	bool const save = impl_->save_->GetValue();
+	// MicroGuy Edition: Force encrypted storage only - no plaintext option
+	bool const save = false;  // Never allow plaintext storage
 	bool const useMaster = impl_->usemaster_->GetValue();
 	bool const forget = !save && !useMaster;
 
